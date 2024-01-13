@@ -13,7 +13,7 @@ export default ({ command, mode }) => {
 
   return defineConfig({
     plugins: [vue()],
-    base: 'module-car',
+    base: env.VITE_APP_NAME,
     server: Object.assign({}, baseUserConfig.server, {
       port: env.VITE_APP_PORT,
     }),
