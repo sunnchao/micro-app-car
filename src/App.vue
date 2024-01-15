@@ -1,29 +1,35 @@
 <script setup lang="ts">
-  import { onMounted, ref } from 'vue';
+  import { onMounted, onBeforeUnmount, ref } from 'vue';
   import { useRouter } from '@shared/router';
 
   const router = useRouter();
   const rootCount = ref(0);
   onMounted(() => {
-    console.log('__MICRO_APP_BASE_ROUTE__', window.__MICRO_APP_BASE_ROUTE__);
-    console.log('__MICRO_APP_BASE_ROUTE__', window.__MICRO_APP_BASE_APPLICATION__);
-    console.log('__MICRO_APP_BASE_ROUTE__', window.__MICRO_APP_PUBLIC_PATH__);
-    console.log('__MICRO_APP_BASE_ROUTE__', window.__MICRO_APP_NAME__);
-    console.log('__MICRO_APP_BASE_ROUTE__', window.__MICRO_APP_ENVIRONMENT__);
+    console.log('__MICRO_APP_PUBLIC_PATH__', window.__MICRO_APP_PUBLIC_PATH__);
+    console.log('__MICRO_APP_NAME__', window.__MICRO_APP_NAME__);
+    console.log('__MICRO_APP_ENVIRONMENT__', window.__MICRO_APP_ENVIRONMENT__);
+
+    // 基座监听下发的数据
+    window.microApp?.addDataListener(
+      window.__MICRO_APP_NAME__,
+      (data) => {
+        if (data.path) {
+          router.push(data.path);
+        }
+      },
+      true,
+    );
   });
 
-  // 监听基座下发的数据变化
-  window.microApp.addDataListener((data) => {
-    console.log('基座下发的数据变化', data);
-    // 当基座下发跳转指令时进行跳转
-    if (data.path) {
-      router.push(data.path);
-    }
-  });
-
-  window.microApp.addGlobalDataListener((data) => {
+  // 基座监听全局下发的数据
+  window.microApp?.addGlobalDataListener((data) => {
     console.log('全局数据', data);
     rootCount.value = data.rootCount;
+  }, true);
+
+  onBeforeUnmount(() => {
+    window.microApp?.clearDataListener();
+    window.microApp?.clearGlobalDataListener();
   });
 </script>
 
