@@ -1,5 +1,5 @@
 {
-  "extends":"../../../tsconfig.json",
+  "extends":"../../tsconfig.json",
   "include": [
     "src/**/*.ts",
     "src/**/*.d.ts",
@@ -10,18 +10,19 @@
     "test/**/*.js",
     "test/**/*.jsx",
     "types/**/*.d.ts",
-    "../../../shared/types/**/*.d.ts",
   ],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@shared/*": ["../../../shared/*"],
+      "@/*": ["./src/*"]
 
     },
     "typeRoots": [
       "./node_modules/@types",
       "./types",
+    ],
+    "types": [
+      "vite/client",
     ]
   },
   "exclude": ["node_modules"]

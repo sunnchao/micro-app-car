@@ -1,24 +1,24 @@
 <script setup lang="ts">
-  import { onMounted, onBeforeUnmount, ref } from 'vue';
-  import { useRouter } from '@shared/router';
+  import { onMounted, onBeforeUnmount, ref, nextTick } from 'vue';
+  import { useRouter } from 'block-libs/dist/router';
 
   const router = useRouter();
   const rootCount = ref(0);
   onMounted(() => {
-    console.log('__MICRO_APP_PUBLIC_PATH__', window.__MICRO_APP_PUBLIC_PATH__);
-    console.log('__MICRO_APP_NAME__', window.__MICRO_APP_NAME__);
-    console.log('__MICRO_APP_ENVIRONMENT__', window.__MICRO_APP_ENVIRONMENT__);
+    console.log('__microApp__', window.microApp);
+  });
 
+  // 监听函数
+  function dataListener(data) {
+    console.log('下发数据 {}', data);
+    if (data.path) {
+      router.push(data.path);
+    }
+  }
+
+  nextTick(() => {
     // 基座监听下发的数据
-    window.microApp?.addDataListener(
-      window.__MICRO_APP_NAME__,
-      (data) => {
-        if (data.path) {
-          router.push(data.path);
-        }
-      },
-      true,
-    );
+    window.microApp?.addDataListener(dataListener, true);
   });
 
   // 基座监听全局下发的数据
