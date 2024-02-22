@@ -1,9 +1,13 @@
 <script setup lang="ts">
   import { onMounted, onBeforeUnmount, ref, nextTick } from 'vue';
   import { useRouter } from 'block-libs/dist/router';
+  import { useAppStore } from 'block-libs/dist/store';
 
   const router = useRouter();
   const rootCount = ref(0);
+
+  const appStore = useAppStore();
+
   onMounted(() => {
     console.log('__microApp__', window.microApp);
   });
@@ -36,17 +40,19 @@
 <template>
   <div style="width: 100%; height: 100%; display: flex">
     <!--左侧菜单-->
-    <div style="width: 50px; height: 100%; background-color: #fff; border-right: 1px solid #ccc">
+    <div
+      style="width: max-content; height: 100%; background-color: #fff; border-right: 1px solid #ccc"
+    >
       <div>
-        <button @click="() => router.push('/home')">首页</button>
+        <a-button type="primary" @click="() => router.push('/home')">首页</a-button>
       </div>
       <div>
-        <button @click="() => router.push('/about')">关于</button>
+        <a-button type="primary" @click="() => router.push('/about')">关于</a-button>
       </div>
     </div>
     <!--右侧-->
     <div style="flex: 1; height: 100%; background-color: #fff">
-      rootCount: {{ rootCount }}
+      rootCount: {{ rootCount }} appStore: {{ appStore.getDarkMode }}
       <router-view />
     </div>
   </div>

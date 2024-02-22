@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import './style.css';
 import App from './App.vue';
 import { router } from '@/router';
+import { _store } from '@/store';
 
 async function boostrap() {
   console.log('__MICRO_APP_PUBLIC_PATH__', window.__MICRO_APP_PUBLIC_PATH__);
@@ -11,6 +12,7 @@ async function boostrap() {
 
   const app = createApp(App);
   app.use(router);
+  app.use(_store);
   app.mount('#car-app');
 }
 

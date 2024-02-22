@@ -2,9 +2,7 @@ import {
   Router,
   getRouter,
   RouteRecordRaw,
-  useBeforeEach,
   useAfterEach,
-  createWebHistory,
   createWebHashHistory,
 } from 'block-libs/dist/router';
 
@@ -32,7 +30,6 @@ const routes: RouteRecordRaw[] = [
     ],
   },
 ];
-console.log('routes', routes);
 const router: Router = getRouter({
   history: createWebHashHistory(
     window.__MICRO_APP_ENVIRONMENT__ ? window.__MICRO_APP_BASE_ROUTE__ : '/',
