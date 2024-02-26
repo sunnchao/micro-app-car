@@ -42,7 +42,6 @@ const router: Router = getRouter({
 
 router.beforeEach((to, from, next) => {
   if (window.__MICRO_APP_ENVIRONMENT__) {
-    console.log('to', to.path);
     if (!to.path.includes(window.__MICRO_APP_BASE_ROUTE__)) {
       next({
         path: window.__MICRO_APP_BASE_ROUTE__ + to.path,
